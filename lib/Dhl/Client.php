@@ -13,7 +13,10 @@ class Client {
     private $authData;
     
     public function __construct($url, \Dhl\Structure\AuthData $authData) {
-        $this->soapClient = new \SoapClient($url);
+        $this->soapClient = new \SoapClient($url,  array( 
+            'trace'          => 1,
+            'exceptions'      => 0
+          ));
         $this->authData = $authData;
     }
     
@@ -23,7 +26,16 @@ class Client {
             'shipments' => $shipmentFullDataCollection->toArray()
         );
         
+        //var_dump($what);
+        
+        //var_dump($this->soapClient->__getLastResponse());
+        
         return $this->soapClient->createShipments($arguments);
+    }
+    
+    public function getLastResponse() {
+        echo $this->soapClient->__getLastResponse();
+        echo $this->soapClient->__getLastResponseHeaders();
     }
     
     /**

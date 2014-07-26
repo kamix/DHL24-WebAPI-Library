@@ -69,7 +69,9 @@ class PieceDefinition implements Structure {
     }
 
     public function toArray() {
-        return get_object_vars($this);
+        $returnArray = get_object_vars($this);
+        unset($returnArray['types']);
+        return $returnArray;
     }
 
 }

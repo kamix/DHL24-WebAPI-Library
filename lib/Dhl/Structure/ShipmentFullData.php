@@ -114,7 +114,21 @@ class ShipmentFullData implements Structure {
     }
 
     public function toArray() {
-        return get_object_vars($this);
+        $returnArray = array();
+        
+        $returnArray['shipper'] = $this->getShipper()->toArray();
+        $returnArray['receiver'] = $this->getReceiver()->toArray();
+        
+        $returnArray['pieceList'] = array();
+        foreach ($this->getPieceList() as $piece) {
+            $returnArray['pieceList'][] = $piece->toArray();
+        }
+        $returnArray['payment'] = $this->getPayment()->toArray();
+        $returnArray['service'] = $this->getService()->toArray();
+        $returnArray['shipmentDate'] = $this->getShipmentDate()->format('Y-m-d');
+        $returnArray['content'] = $this->getContent();
+        
+        return $returnArray;
     }
 
 }

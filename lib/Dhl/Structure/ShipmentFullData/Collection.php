@@ -11,14 +11,14 @@ class Collection {
     }
     
     public function addShipmentFullData(\Dhl\Structure\ShipmentFullData $shipmentFullData) {
-        $this->item[] = $shipmentFullData;
+        $this->items[] = $shipmentFullData;
     }
     
     public function toArray() 
     {
         $items = array();
         foreach ($this->items as $item) {
-            $items = $item->toArray();
+            $items[] = $item->toArray();
         }
         
         return $items;

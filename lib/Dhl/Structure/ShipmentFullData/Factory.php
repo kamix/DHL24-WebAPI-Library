@@ -12,17 +12,19 @@ class Factory {
     {
         $shipmentFullData = new \Dhl\Structure\ShipmentFullData();
         
-        $shipmentFullData->setShipmentId(12354);
-        
-        if (isset($array['receiver']) && $array['receiver'] instanceof Address) {
+        if (isset($array['receiver']) && $array['receiver'] instanceof \Dhl\Structure\Address) {
             $shipmentFullData->setReceiver($array['receiver']);
         }
         
-        if (isset($array['shipper']) && $array['shipper'] instanceof Address) {
+        if (isset($array['shipper']) && $array['shipper'] instanceof \Dhl\Structure\Address) {
             $shipmentFullData->setShipper($array['shipper']);
         }
         
-        
+        $shipmentFullData->setPieceList($array['pieceList']);
+        $shipmentFullData->setPayment($array['payment']);
+        $shipmentFullData->setShipmentDate($array['shipmentDate']);
+        $shipmentFullData->setService($array['service']);
+        $shipmentFullData->setContent($array['content']);
         
         return $shipmentFullData;
     }
