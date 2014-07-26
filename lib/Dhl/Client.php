@@ -48,6 +48,16 @@ class Client {
         return $array;
     }
     
+    public function getLabels($itemsToPrint) 
+    {
+        $arguments = array(
+            'authData' => $this->authData->toArray(),
+            'itemsToPrint' => $itemsToPrint
+        );
+        
+        return $this->soapClient->getLabels($arguments);
+    }
+    
     /**
      * Method allows to fetch waybill for given ID.
      * @param type $shipmentId
