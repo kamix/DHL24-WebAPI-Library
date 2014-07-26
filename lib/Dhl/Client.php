@@ -3,6 +3,7 @@
 namespace Dhl;
 
 use \Dhl\Structure\ShipmentBasicData\Factory as ShipmentBasicDataFactory;
+use \Dhl\Structure\ItemToPrintResponse\Factory as ItemToPrintResponseFactory;
 
 class Client {
     
@@ -31,7 +32,8 @@ class Client {
      * @param \DateTime $to
      * @return \Dhl\Structure\ShipmentBasicData[]
      */
-    public function getMyShipments(\DateTime $from, \DateTime $to) {
+    public function getMyShipments(\DateTime $from, \DateTime $to) 
+    {
         $arguments = array(
             'authData' => $this->authData->toArray(),
             'createdFrom' => $from->format('Y-m-d'),
@@ -48,6 +50,11 @@ class Client {
         return $array;
     }
     
+    /**
+     * 
+     * @param Dhl\Structure\ItemToPrint[] $itemsToPrint
+     * @return \Dhl\Structure\ItemToPrintResponse[]
+     */
     public function getLabels($itemsToPrint) 
     {
         $arguments = array(
@@ -55,7 +62,18 @@ class Client {
             'itemsToPrint' => $itemsToPrint
         );
         
-        return $this->soapClient->getLabels($arguments);
+        $returnArray = array();
+        
+        $result = $this->soapClient->getLabels($arguments)->getLabelsResult->item;
+        if (!is_array($result)) {
+            $result = array($result);
+        }
+        
+        foreach ($result as $item) {
+            $returnArray[] = ItemToPrintResponseFactory::createFromStdObject($item);
+        }
+        
+        return $returnArray;
     }
     
     /**
@@ -63,7 +81,8 @@ class Client {
      * @param type $shipmentId
      * @return type
      */
-    public function getShipmentScan($shipmentId) {
+    public function getShipmentScan($shipmentId) 
+    {
         $arguments = array(
             'authData' => $this->authData->toArray(),
             'shipmentId' => $shipmentId
@@ -72,7 +91,12 @@ class Client {
         return $this->soapClient->getShipmentScan($arguments);
     }
     
-    public function getVersion() {
+    /**
+     * 
+     * @return type
+     */
+    public function getVersion() 
+    {
         return $this->soapClient->getVersion();
     }
 }
