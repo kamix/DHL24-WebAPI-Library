@@ -10,7 +10,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase {
     private $client;
  
     public function setUp() {
-        $authData = new \Dhl\AuthData('RESMEDIA', 'yBKp7WFPRh8dVk3');
+        $authData = new \Dhl\AuthData('', '');
         //$this->client = new Client('https://testowy.dhl24.com.pl/webapi', $authData);
     }
     

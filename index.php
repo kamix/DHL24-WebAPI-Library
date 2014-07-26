@@ -1,49 +1,10 @@
 <?php
-/*
-class DHL24_webapi_client extends SoapClient
-{
-    const WSDL = 'https://testowy.dhl24.com.pl/webapi';
- 
-    public function __construct()
-    {
-        parent::__construct( self::WSDL );
-    }
-}
- 
-$client = new DHL24_webapi_client;
 
-$result = $client->getVersion();
-var_dump($result);
-
-/*$result = $client->__getFunctions();
-var_dump($result);
-*/
-/*
-$authData =  array(
-        'username' => 'RESMEDIA',
-        'password' => 'yBKp7WFPRh8dVk3' );
-
-$arguments = array(
-    'authData' => $authData,
-    'createdFrom' => '2004-02-02',
-    'createdTo' => '2004-02-03'
-);
-
-$result = $client->getMyShipments($arguments); //$client->__soapCall('AuthData', $arguments);
-
-var_dump($result);*/
-date_default_timezone_set('Europe/Warsaw');
-
-function my_autoload($class)
-{
-    $class = str_replace('\\', '/', $class);
-    require $class  . '.php';
-}
-
-spl_autoload_register('my_autoload');
+include('tests/bootstrap.php');
+include('config.php');
 
 
-$authData = new \Dhl\Structure\AuthData('RESMEDIA', 'yBKp7WFPRh8dVk3');
+$authData = new \Dhl\Structure\AuthData(USERNAME, PASSWORD);
 $dhlClient = new \Dhl\Client('https://testowy.dhl24.com.pl/webapi', $authData);
 
 //$result = $dhlClient->getVersion();
@@ -75,12 +36,34 @@ $shipmentFullDataCollection->addShipmentFullData($shipmentFullData);
 
 
 $result = $dhlClient->getMyShipments(new DateTime('2014-07-24'), new DateTime('2014-07-26'));
-var_dump($result);
+//var_dump($result);
 
 $shipmentId = 11102575394;
+$shipmentId2 = 11102574635;
 $result = $dhlClient->getShipmentScan($shipmentId);
-var_dump($result);
+//var_dump($result);
 
 $data = $result->getShipmentScanResult->scanData;
 
-echo '<img src="data:image/png;base64,' . base64_decode($data) . '" />';
+//echo '<img src="data:image/png;base64,' . $data . '" />';
+
+$itemToPrint = new Dhl\Structure\ItemToPrint();
+$itemToPrint->setLabelType(Dhl\Structure\ItemToPrint::TYPE_LP);
+$itemToPrint->setShipmentId($shipmentId);
+
+$itemToPrint2 = new Dhl\Structure\ItemToPrint();
+$itemToPrint2->setLabelType(Dhl\Structure\ItemToPrint::TYPE_LP);
+$itemToPrint2->setShipmentId($shipmentId2);
+
+$array = array(
+    $itemToPrint,
+    $itemToPrint2,
+);
+$result = $dhlClient->getLabels($array);
+//var_dump($result);
+/*
+$labelMimeType = $result->getLabelsResult->item->labelMimeType;
+$data = $result->getLabelsResult->item->labelData;
+*/
+header("Content-type: {$result[0]->getLabelMimeType()}");
+echo base64_decode($result[0]->getLabelData());
