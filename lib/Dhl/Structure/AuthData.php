@@ -2,6 +2,10 @@
 
 namespace Dhl\Structure;
 
+/**
+ * AuthData class represents:
+ * @link https://dhl24.com.pl/webapi/doc/autoryzacyjna.html
+ */
 class AuthData implements Structure
 {
     private $username;

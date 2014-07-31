@@ -5,8 +5,13 @@ namespace Dhl;
 use \Dhl\Structure\ShipmentBasicData\Factory as ShipmentBasicDataFactory;
 use \Dhl\Structure\ItemToPrintResponse\Factory as ItemToPrintResponseFactory;
 
+/**
+ * \Dhl\Client 
+ * Decorator of \SoapClient class which helps making requests to DHL24 API
+ */
 class Client {
     
+    /** \SoapClient $soapClient */
     private $soapClient;
     
     /** \Dhl\Structure\AuthData $authData */
@@ -17,29 +22,36 @@ class Client {
             'trace'          => 1,
             'exceptions'      => 0
           ));
+        
         $this->authData = $authData;
     }
     
+    /**
+     * @link https://dhl24.com.pl/webapi/doc/createShipments.html
+     * @param \Dhl\Structure\ShipmentFullData\Collection $shipmentFullDataCollection
+     * @return type
+     */
     public function createShipments(\Dhl\Structure\ShipmentFullData\Collection $shipmentFullDataCollection) {
         $arguments = array(
             'authData' => $this->authData->toArray(),
             'shipments' => $shipmentFullDataCollection->toArray()
         );
         
-        //var_dump($what);
-        
-        //var_dump($this->soapClient->__getLastResponse());
-        
         return $this->soapClient->createShipments($arguments);
     }
     
+    /**
+     * getLastResponse : just for debug
+     * @return void
+     */
     public function getLastResponse() {
-        echo $this->soapClient->__getLastResponse();
-        echo $this->soapClient->__getLastResponseHeaders();
+        print_r($this->soapClient->__getLastResponse());
+        print_r($this->soapClient->__getLastResponseHeaders());
     }
     
     /**
-     * 
+     * Method allows to fetch all shipments of DHL customer
+     * @link https://dhl24.com.pl/webapi/doc/getMyShipments.html
      * @param \DateTime $from
      * @param \DateTime $to
      * @return \Dhl\Structure\ShipmentBasicData[]
@@ -63,7 +75,8 @@ class Client {
     }
     
     /**
-     * 
+     * Method allows to fetch waybill in PDF format.
+     * @link https://dhl24.com.pl/webapi/doc/getLabels.html
      * @param Dhl\Structure\ItemToPrint[] $itemsToPrint
      * @return \Dhl\Structure\ItemToPrintResponse[]
      */
@@ -90,6 +103,7 @@ class Client {
     
     /**
      * Method allows to fetch waybill for given ID.
+     * @link https://dhl24.com.pl/webapi/doc/getShipmentScan.html
      * @param type $shipmentId
      * @return type
      */
@@ -104,7 +118,8 @@ class Client {
     }
     
     /**
-     * 
+     * Returns version of DHL24 webservice
+     * @link https://dhl24.com.pl/webapi/doc/getVersion.html
      * @return type
      */
     public function getVersion() 

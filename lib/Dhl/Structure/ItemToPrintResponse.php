@@ -2,6 +2,10 @@
 
 namespace Dhl\Structure;
 
+/**
+ * ItemToPrintResponse class represents:
+ * @link https://dhl24.com.pl/webapi/doc/itemToPrintResponse.html
+ */
 class ItemToPrintResponse implements Structure {
 
     private $shipmentId;

@@ -2,6 +2,10 @@
 
 namespace Dhl\Structure;
 
+/**
+ * ItemToPrint class represents:
+ * @link https://dhl24.com.pl/webapi/doc/itemToPrint.html
+ */
 class ItemToPrint implements Structure {
 
     const TYPE_LP = 'LP';

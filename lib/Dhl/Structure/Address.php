@@ -2,6 +2,10 @@
 
 namespace Dhl\Structure;
 
+/**
+ * Address class represents:
+ * @link https://dhl24.com.pl/webapi/doc/adresowa.html
+ */
 class Address implements Structure {
 
     private $name;
