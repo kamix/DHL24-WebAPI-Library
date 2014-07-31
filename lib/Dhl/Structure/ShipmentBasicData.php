@@ -4,6 +4,10 @@ namespace Dhl\Structure;
 
 use Dhl\Structure\Address;
 
+/**
+ * ShipmentBasicData class represents:
+ * @link https://dhl24.com.pl/webapi/doc/shipmentFullData.html
+ */
 class ShipmentBasicData implements Structure {
     
     private $shipmentId;

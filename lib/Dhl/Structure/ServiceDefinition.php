@@ -2,6 +2,10 @@
 
 namespace Dhl\Structure;
 
+/**
+ * ServiceDefinition class represents:
+ * @link https://dhl24.com.pl/webapi/doc/serviceDefinition.html
+ */
 class ServiceDefinition implements Structure {
 
     const TYPE_PRODUCT_AH = 'AH';

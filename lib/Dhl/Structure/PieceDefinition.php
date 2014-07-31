@@ -2,6 +2,10 @@
 
 namespace Dhl\Structure;
 
+/**
+ * PieceDefinition class represents:
+ * @link https://dhl24.com.pl/webapi/doc/definicjaPaczki.html
+ */
 class PieceDefinition implements Structure {
 
     const TYPE_ENVELOPE = 'ENVELOPE';

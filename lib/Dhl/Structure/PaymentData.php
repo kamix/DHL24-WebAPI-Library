@@ -2,6 +2,10 @@
 
 namespace Dhl\Structure;
 
+/**
+ * PaymentData class represents:
+ * @link https://dhl24.com.pl/webapi/doc/paymentData.html
+ */
 class PaymentData implements Structure {
 
     const TYPE_PAYER_SHIPPER = 'SHIPPER';

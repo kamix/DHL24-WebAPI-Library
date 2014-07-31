@@ -2,6 +2,10 @@
 
 namespace Dhl\Structure;
 
+/**
+ * ShipmentFullData class represents:
+ * @link https://dhl24.com.pl/webapi/doc/shipmentFullData.html
+ */
 class ShipmentFullData implements Structure {
 
     private $shipmentId;
