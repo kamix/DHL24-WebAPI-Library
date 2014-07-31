@@ -8,7 +8,7 @@ https://dhl24.com.pl/webapi/doc.html
 Usage
 -----
 
-.. code-block:: php
+```php
 
     $authData = new \Dhl\Structure\AuthData(USERNAME, PASSWORD);
     $dhlClient = new \Dhl\Client('https://testowy.dhl24.com.pl/webapi', $authData);
