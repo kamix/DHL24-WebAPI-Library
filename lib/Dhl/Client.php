@@ -37,7 +37,9 @@ class Client {
             'shipments' => $shipmentFullDataCollection->toArray()
         );
         
-        return $this->soapClient->createShipments($arguments);
+        $result = $this->soapClient->createShipments($arguments);
+        
+        return ShipmentBasicDataFactory::createFromStdObject($result->createShipmentsResult->item);
     }
     
     /**
