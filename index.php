@@ -39,9 +39,17 @@ $piece1 = new Dhl\Structure\PieceDefinition();
 $piece1->setType(Dhl\Structure\PieceDefinition::TYPE_ENVELOPE);
 $piece1->setQuantity(1);
 
+// payment data receiver
+/*
 $paymentData =  new Dhl\Structure\PaymentData();
 $paymentData->setPayerType(\Dhl\Structure\PaymentData::TYPE_PAYER_RECEIVER);
 $paymentData->setPaymentMethod(\Dhl\Structure\PaymentData::TYPE_PAYMENT_CASH);
+ */
+
+$paymentData =  new Dhl\Structure\PaymentData();
+$paymentData->setPayerType(\Dhl\Structure\PaymentData::TYPE_PAYER_USER);
+$paymentData->setAccountNumber(ACCOUNT_NUMBER);
+$paymentData->setPaymentMethod(\Dhl\Structure\PaymentData::TYPE_PAYMENT_BANK_TRANSFER);
 
 $serviceDefinition = new \Dhl\Structure\ServiceDefinition();
 $serviceDefinition->setProduct(\Dhl\Structure\ServiceDefinition::TYPE_PRODUCT_AH);
@@ -56,7 +64,7 @@ $array = array(
     ),
     'payment' => $paymentData,
     'service' => $serviceDefinition,
-    'shipmentDate' => new \DateTime('2014-07-28'),
+    'shipmentDate' => new \DateTime('2014-09-01'),
     'content' => 'Kokosy'
 );
 
@@ -68,10 +76,10 @@ $shipmentFullData = \Dhl\Structure\ShipmentFullData\Factory::createFromArray($ar
 $shipmentFullDataCollection = new Dhl\Structure\ShipmentFullData\Collection;
 $shipmentFullDataCollection->addShipmentFullData($shipmentFullData);
 
-/*$result = $dhlClient->createShipments($shipmentFullDataCollection);
+$result = $dhlClient->createShipments($shipmentFullDataCollection);
 
 print_r($result);
-$dhlClient->getLastResponse();
+/*$dhlClient->getLastResponse();
 */
 }
         catch(\SoapFault $e) {
@@ -79,7 +87,7 @@ $dhlClient->getLastResponse();
             
             print_r($dhlClient->getLastResponse());
         }
-        //die();
+        die();
 
 /*
 $result = $dhlClient->getMyShipments(new DateTime('2014-07-24'), new DateTime('2014-07-26'));
@@ -118,7 +126,7 @@ $result = $dhlClient->getLabels($array);
 $labelMimeType = $result->getLabelsResult->item->labelMimeType;
 $data = $result->getLabelsResult->item->labelData;
 */
-
+/*
 header("Content-type: {$result[2]->getLabelMimeType()}");
 echo base64_decode($result[2]->getLabelData());
- 
+ */

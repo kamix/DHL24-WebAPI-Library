@@ -16,6 +16,7 @@ class PaymentData implements Structure {
 
     private $paymentMethod;
     private $payerType;
+    private $accountNumber;
 
     public function getPaymentMethod() {
         return $this->paymentMethod;
@@ -31,6 +32,14 @@ class PaymentData implements Structure {
 
     public function setPayerType($payerType) {
         $this->payerType = $payerType;
+    }
+    
+    public function getAccountNumber() {
+        return $this->accountNumber;
+    }
+
+    public function setAccountNumber($accountNumber) {
+        $this->accountNumber = $accountNumber;
     }
 
     public function toArray() {

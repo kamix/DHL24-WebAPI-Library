@@ -38,6 +38,8 @@ class Client {
         );
         
         $result = $this->soapClient->createShipments($arguments);
+        var_dump($result);
+        die();
         
         return ShipmentBasicDataFactory::createFromStdObject($result->createShipmentsResult->item);
     }
