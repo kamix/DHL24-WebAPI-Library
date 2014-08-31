@@ -19,6 +19,7 @@ class PieceDefinition implements Structure {
     private $length;
     private $weight;
     private $quantity;
+    private $nonstandard;
 
     public function getType() {
         return $this->type;
@@ -70,6 +71,14 @@ class PieceDefinition implements Structure {
 
     public function setQuantity($quantity) {
         $this->quantity = $quantity;
+    }
+    
+    public function getNonStandard() {
+        return $this->nonstandard;
+    }
+
+    public function setNonStandard($nonstandard) {
+        $this->nonstandard = $nonstandard;
     }
 
     public function toArray() {
