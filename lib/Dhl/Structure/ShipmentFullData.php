@@ -86,7 +86,7 @@ class ShipmentFullData implements Structure {
     }
 
     public function getShipmentDate() {
-        return $this->shipmentDate;
+        return new \DateTime($this->shipmentDate);
     }
 
     public function setShipmentDate($shipmentDate) {
