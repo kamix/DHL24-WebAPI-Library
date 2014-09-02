@@ -90,7 +90,7 @@ class ShipmentFullData implements Structure {
             return $this->shipmentDate;
         }
         else {
-            return \DateTime($this->shipmentDate);
+            return new \DateTime($this->shipmentDate);
         }
         
     }
