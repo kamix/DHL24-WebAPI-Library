@@ -64,7 +64,7 @@ $array = array(
     ),
     'payment' => $paymentData,
     'service' => $serviceDefinition,
-    'shipmentDate' => new \DateTime('2014-09-01'),
+    'shipmentDate' => new \DateTime('now +1day'),
     'content' => 'Kokosy'
 );
 
