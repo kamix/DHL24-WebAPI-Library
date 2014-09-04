@@ -120,6 +120,23 @@ class Client {
     }
     
     /**
+     * 
+     * @link https://dhl24.com.pl/webapi/doc/bookCourier.html
+     * @param \Dhl\Structure\BookCourier $bookCourier
+     * @return type
+     */
+    public function bookCourier(\Dhl\Structure\BookCourier $bookCourier)
+    {
+        $arguments = array(
+            'authData' => $this->authData->toArray(),
+        );
+        
+        $arguments = array_merge($arguments, $bookCourier->toArray());
+        
+        return $this->soapClient->bookCourier($arguments);
+    }
+    
+    /**
      * Returns version of DHL24 webservice
      * @link https://dhl24.com.pl/webapi/doc/getVersion.html
      * @return type
