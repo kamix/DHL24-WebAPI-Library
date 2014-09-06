@@ -17,6 +17,8 @@ class Client {
     /** \Dhl\Structure\AuthData $authData */
     private $authData;
     
+    private $errorMessages = array();
+    
     public function __construct($url, \Dhl\Structure\AuthData $authData) {
         $this->soapClient = new \SoapClient($url,  array( 
             'trace'          => 1,
@@ -39,6 +41,12 @@ class Client {
         
         $result = $this->soapClient->createShipments($arguments);
         
+        if (!isset($result->createShipmentsResult)) {
+            $this->errorMessages[] = $result->faultstring;
+            
+            return false;
+        }
+        
         return ShipmentBasicDataFactory::createFromStdObject($result->createShipmentsResult->item);
     }
     
@@ -49,6 +57,14 @@ class Client {
     public function getLastResponse() {
         print_r($this->soapClient->__getLastResponse());
         print_r($this->soapClient->__getLastResponseHeaders());
+    }
+    
+    /**
+     * 
+     * @return string[]
+     */
+    public function getErrorMessages() {
+        return $this->errorMessages;
     }
     
     /**
