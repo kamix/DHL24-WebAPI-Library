@@ -149,7 +149,15 @@ class Client {
         
         $arguments = array_merge($arguments, $bookCourier->toArray());
         
-        return $this->soapClient->bookCourier($arguments);
+        $result = $this->soapClient->bookCourier($arguments);
+        
+        if (!isset($result->bookCourierResult)) {
+            $this->errorMessages[] = $result->faultstring;
+            
+            return false;
+        }
+        
+        return $result->bookCourierResult->item;
     }
     
     /**
