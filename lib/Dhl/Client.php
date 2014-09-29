@@ -160,6 +160,27 @@ class Client {
         return $result->bookCourierResult->item;
     }
     
+    public function isShipmentDelivered($shipmentId) 
+    {
+        $arguments = array(
+            'authData'   => $this->authData->toArray(),
+            'shipmentId' => $shipmentId
+        );
+        
+        $result = $this->soapClient->getTrackAndTraceInfo($arguments);
+        if (!isset($result->getTrackAndTraceInfoResult)) {
+            $this->errorMessages[] = $result->faultstring;
+            
+            return false;
+        }
+        
+        if ('' == $result->getTrackAndTraceInfoResult->receivedBy) {
+            return false;
+        }
+        
+        return true;
+    }
+    
     /**
      * Returns version of DHL24 webservice
      * @link https://dhl24.com.pl/webapi/doc/getVersion.html
