@@ -181,6 +181,41 @@ class Client {
         return true;
     }
     
+    public function getPostalCodeServices($postalCode, $pickupDate)
+    {
+        $arguments = array(
+            'authData'   => $this->authData->toArray(),
+            'postCode' => $postalCode,
+            'pickupDate' => $pickupDate
+        );
+        
+        $result = $this->soapClient->getPostalCodeServices($arguments);
+        
+        if (!isset($result->getPostalCodeServicesResult)) {
+            $this->errorMessages[] = $result->faultstring;
+            
+            return false;
+        }
+        
+        if ('brak' === $result->getPostalCodeServicesResult->drPickupFrom) {
+            $timeAvailableFrom = null;
+        } else {
+            $timeAvailableFrom = $result->getPostalCodeServicesResult->drPickupFrom;
+        }
+        
+        if ('brak' === $result->getPostalCodeServicesResult->drPickupTo) {
+            $timeAvailableTo = null;
+        } else {
+            $timeAvailableTo = $result->getPostalCodeServicesResult->drPickupTo;
+        }
+        
+        $response = new \stdClass();
+        $response->timeAvailableFrom = $timeAvailableFrom;
+        $response->timeAvailableTo = $timeAvailableTo;
+        
+        return $response;
+    }
+    
     /**
      * Returns version of DHL24 webservice
      * @link https://dhl24.com.pl/webapi/doc/getVersion.html

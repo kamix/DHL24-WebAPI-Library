@@ -12,6 +12,7 @@ $dhlClient = new \Dhl\Client('https://testowy.dhl24.com.pl/webapi', $authData);
 
 
 $shipment = $dhlClient->isShipmentDelivered(11102575394);
+$row = $dhlClient->getPostalCodeServices('26600', '2014-10-12');
 //$result = $dhlClient->getVersion();
 //var_dump($result);
 
