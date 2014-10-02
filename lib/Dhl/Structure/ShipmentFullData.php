@@ -137,6 +137,7 @@ class ShipmentFullData implements Structure {
         $returnArray['service'] = $this->getService()->toArray();
         $returnArray['shipmentDate'] = $this->getShipmentDate()->format('Y-m-d');
         $returnArray['content'] = $this->getContent();
+        $returnArray['comment'] = $this->getComment();
         
         return $returnArray;
     }
