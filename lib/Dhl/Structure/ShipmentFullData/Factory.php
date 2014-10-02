@@ -25,6 +25,7 @@ class Factory {
         $shipmentFullData->setShipmentDate($array['shipmentDate']);
         $shipmentFullData->setService($array['service']);
         $shipmentFullData->setContent($array['content']);
+        $shipmentFullData->setComment($array['comment']);
         
         return $shipmentFullData;
     }
