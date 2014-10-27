@@ -160,7 +160,46 @@ class Client {
         return $result->bookCourierResult->item;
     }
     
+    public function isShipmentExist($shipmentId)
+    {
+        $arguments = array(
+            'authData'   => $this->authData->toArray(),
+            'shipmentId' => $shipmentId
+        );
+        
+        $result = $this->soapClient->getTrackAndTraceInfo($arguments);
+        if (!isset($result->getTrackAndTraceInfoResult)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
     public function isShipmentDelivered($shipmentId) 
+    {
+        $arguments = array(
+            'authData'   => $this->authData->toArray(),
+            'shipmentId' => $shipmentId
+        );
+        
+        $result = $this->soapClient->getTrackAndTraceInfo($arguments);
+        if (!isset($result->getTrackAndTraceInfoResult)) {
+            $this->errorMessages[] = $result->faultstring;
+            
+            return false;
+        }
+        
+        foreach ($result->getTrackAndTraceInfoResult->events->item as $event) {
+            
+            if ($event->status == "DOR") {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public function getLastShipmentEvent($shipmentId) 
     {
         $arguments = array(
             'authData'   => $this->authData->toArray(),
