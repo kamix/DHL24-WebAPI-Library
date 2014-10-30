@@ -220,6 +220,17 @@ class Client {
         return true;
     }
     
+    public function cancelCourierBooking($courierBookingId) {
+        $arguments = array(
+            'authData'   => $this->authData->toArray(),
+            'orderId' => $courierBookingId
+        );
+        
+        $result = $this->soapClient->cancelCourierBooking($arguments);
+        
+        return true;
+    }
+    
     public function getPostalCodeServices($postalCode, $pickupDate)
     {
         $arguments = array(
