@@ -249,12 +249,32 @@ class Client {
     public function cancelCourierBooking($courierBookingId) {
         $arguments = array(
             'authData'   => $this->authData->toArray(),
-            'orderId' => $courierBookingId
+            'orders' => array( $courierBookingId )
         );
         
         $result = $this->soapClient->cancelCourierBooking($arguments);
-        
+
+	if (!isset($result->cancelCourierBookingResult)) {
+		$this->errorMessages[] = $result->faulstring;
+		return false;
+	}	
+
+	
         return true;
+    }
+
+
+    public function deleteShipment($shipmentId)
+    {
+	$arguments = array(
+            'authData'   => $this->authData->toArray(),
+            'shipments' => array( $shipmentId )
+        );
+
+
+	$result = $this->soapClient->deleteShipments($arguments);
+
+	return true;
     }
     
     public function getPostalCodeServices($postalCode, $pickupDate)
