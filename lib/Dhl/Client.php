@@ -183,6 +183,7 @@ class Client {
         );
         
         $result = $this->soapClient->getTrackAndTraceInfo($arguments);
+        
         if (!isset($result->getTrackAndTraceInfoResult)) {
             $this->errorMessages[] = $result->faultstring;
             
@@ -192,6 +193,31 @@ class Client {
         foreach ($result->getTrackAndTraceInfoResult->events->item as $event) {
             
             if ($event->status == "DOR") {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public function isShipmentCollected($shipmentId)
+    {
+        $arguments = array(
+            'authData'   => $this->authData->toArray(),
+            'shipmentId' => $shipmentId
+        );
+        
+        $result = $this->soapClient->getTrackAndTraceInfo($arguments);
+        
+        if (!isset($result->getTrackAndTraceInfoResult)) {
+            $this->errorMessages[] = $result->faultstring;
+            
+            return false;
+        }
+        
+        foreach ($result->getTrackAndTraceInfoResult->events->item as $event) {
+            
+            if ($event->status == "DWP") {
                 return true;
             }
         }
