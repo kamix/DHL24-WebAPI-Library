@@ -190,6 +190,10 @@ class Client {
             return false;
         }
         
+        if (!isset($result->getTrackAndTraceInfoResult->events->item)) {
+            return false;
+        }
+        
         foreach ($result->getTrackAndTraceInfoResult->events->item as $event) {
             
             if ($event->status == "DOR") {
@@ -212,6 +216,10 @@ class Client {
         if (!isset($result->getTrackAndTraceInfoResult)) {
             $this->errorMessages[] = $result->faultstring;
             
+            return false;
+        }
+        
+        if (!isset($result->getTrackAndTraceInfoResult->events->item)) {
             return false;
         }
         
@@ -305,9 +313,29 @@ class Client {
             $timeAvailableTo = $result->getPostalCodeServicesResult->drPickupTo;
         }
         
+        if ('brak' === $result->getPostalCodeServicesResult->drPickupTo) {
+            $timeAvailableTo = null;
+        } else {
+            $timeAvailableTo = $result->getPostalCodeServicesResult->drPickupTo;
+        }
+        
+        if ('brak' === $result->getPostalCodeServicesResult->exPickupFrom) {
+            $exTimeAvailableFrom = null;
+        } else {
+            $exTimeAvailableFrom = $result->getPostalCodeServicesResult->exPickupFrom;
+        }
+        
+        if ('brak' === $result->getPostalCodeServicesResult->exPickupTo) {
+            $exTimeAvailableTo = null;
+        } else {
+            $exTimeAvailableTo = $result->getPostalCodeServicesResult->exPickupTo;
+        }
+        
         $response = new \stdClass();
         $response->timeAvailableFrom = $timeAvailableFrom;
         $response->timeAvailableTo = $timeAvailableTo;
+        $response->exTimeAvailableFrom = $exTimeAvailableFrom;
+        $response->exTimeAvailableTo = $exTimeAvailableTo;
         
         return $response;
     }
