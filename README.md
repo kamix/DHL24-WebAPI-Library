@@ -1,4 +1,4 @@
-DHL2 WebAPI Library
+DHL24 WebAPI Library
 ------------
 
 This library is SDK for:
